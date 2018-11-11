@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_ingredients_names"
+        android:layout_width="@dimen/fragment_ingredients_layout_width"
+        android:layout_height="@dimen/fragment_ingredients_layout_height"
+        android:layout_marginBottom="@dimen/fragment_ingredient_margin_bottom"
+        android:layout_marginLeft="@dimen/fragment_ingredient_margin_left"
+        android:layout_marginStart="@dimen/fragment_ingredient_margin_start"
+        android:layout_marginTop="@dimen/fragment_ingredient_margin_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabDetails"
+        android:layout_width="@dimen/fragment_ingredient_fab_layout_width"
+        android:layout_height="@dimen/fragment_ingredient_fab_layout_height"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fragment_ingredient_fab_layout_margin"
+        android:layout_marginBottom="@dimen/fragment_ingredient_fab_margin_bottom"
+        android:layout_marginEnd="@dimen/fragment_ingredient_fab_margin_end"
+        android:layout_marginLeft="@dimen/fragment_ingredient_fab_margin_left"
+        android:layout_marginRight="@dimen/fragment_ingredient_fab_margin_right"
+        android:layout_marginStart="@dimen/fragment_ingredient_fab_margin_start"
+        android:layout_marginTop="@dimen/fragment_ingredient_fab_margin_top"
+        android:foreground="@drawable/ic_navigate_next_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.975"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.982" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fabBack"
+        android:layout_width="@dimen/fragment_ingredient_fab_back_layout_width"
+        android:layout_height="@dimen/fragment_ingredient_fab_back_layout_height"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fragment_ingredient_fab_back_layout_margin"
+        android:layout_marginBottom="@dimen/fragment_ingredient_fab_back_margin_bottom"
+        android:layout_marginEnd="@dimen/fragment_ingredient_fab_back_margin_end"
+        android:layout_marginLeft="@dimen/fragment_ingredient_fab_back_margin_left"
+        android:layout_marginRight="@dimen/fragment_ingredient_fab_back_margin_right"
+        android:layout_marginStart="@dimen/fragment_ingredient_fab_back_margin_start"
+        android:layout_marginTop="@dimen/fragment_ingredient_fab_back_margin_top"
+        android:foreground="@drawable/ic_navigate_before_black_24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.981" />
+
+</android.support.constraint.ConstraintLayout>
