@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
 
     private static final String DETAILS = "Details";
     private static final String INGREDIENTS = "Ingredients";
+    private static final String SCREEN_FLAG = "ScreenFlag";
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
 
     @Override
@@ -29,42 +31,33 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        FoodFragment foodFragment = new FoodFragment();
         if (findViewById(R.id.cl_fragment_container) != null) {
 
             largeScreen = true;
-
             if (savedInstanceState == null) {
-                FoodFragment foodFragment = new FoodFragment();
 
-                FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().add(R.id.fragment_frame, foodFragment)
                         .commit();
-
             }
         } else {
             largeScreen = false;
-            FoodFragment foodFragment = new FoodFragment();
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-
             fragmentManager.beginTransaction().add(R.id.food_names_container, foodFragment)
                     .commit();
         }
-
     }
 
     @Override
     public void onFoodSelected(BakingNetworkData data) {
 
+        IngredientFragment ingredientFragment = new IngredientFragment();
+        DetailFragment detailFragment = new DetailFragment();
+        Bundle bundle = new Bundle();
+
         if (largeScreen) {
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            IngredientFragment ingredientFragment = new IngredientFragment();
-
-            Bundle bundle = new Bundle();
             bundle.putParcelable(INGREDIENTS, data);
-            bundle.putBoolean("ScreenFlag", largeScreen);
+            bundle.putBoolean(SCREEN_FLAG, largeScreen);
             ingredientFragment.setArguments(bundle);
 
 
@@ -72,25 +65,16 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
                     ingredientFragment)
                     .addToBackStack(null)
                     .commit();
-            //FragmentManager fragmentManager = getSupportFragmentManager();
-            DetailFragment detailFragment = new DetailFragment();
 
-           // Bundle bundle = new Bundle();
             bundle.putParcelableArrayList(DETAILS, data.getCookingSteps());
             detailFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.cooking_steps,
                     detailFragment).addToBackStack(null).commit();
 
-            VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
-
         } else {
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            IngredientFragment ingredientFragment = new IngredientFragment();
-
-            Bundle bundle = new Bundle();
             bundle.putParcelable(INGREDIENTS, data);
-            bundle.putBoolean("ScreenFlag", largeScreen);
+            bundle.putBoolean(SCREEN_FLAG, largeScreen);
             ingredientFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.food_names_container, ingredientFragment)
                     .addToBackStack(null)
@@ -98,26 +82,20 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
         }
     }
 
-
     @Override
     public void onIngredientViewActionClicked(ArrayList<CookingSteps> cookingStepsData) {
 
+        Bundle bundle = new Bundle();
+
+        DetailFragment detailFragment = new DetailFragment();
 
         if (largeScreen) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            DetailFragment detailFragment = new DetailFragment();
-
-            Bundle bundle = new Bundle();
             bundle.putParcelableArrayList(DETAILS, cookingStepsData);
             detailFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.cooking_steps,
                     detailFragment).addToBackStack(null).commit();
         } else {
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            DetailFragment detailFragment = new DetailFragment();
-
-            Bundle bundle = new Bundle();
             bundle.putParcelableArrayList(DETAILS, cookingStepsData);
             detailFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.food_names_container,
@@ -128,23 +106,18 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
 
     @Override
     public void onPlayVideoSelected(String videoString) {
+        VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
 
-        if(largeScreen){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
+        Bundle bundle = new Bundle();
 
-            Bundle bundle = new Bundle();
+        if (largeScreen) {
             bundle.putString(DETAILS, videoString);
-            bundle.putBoolean("ScreenFlag",largeScreen);
+            bundle.putBoolean(SCREEN_FLAG, largeScreen);
             videoPlayerFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.cooking_video,
                     videoPlayerFragment).addToBackStack(null).commit();
 
         } else {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
-
-            Bundle bundle = new Bundle();
             bundle.putString(DETAILS, videoString);
             videoPlayerFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.food_names_container,
