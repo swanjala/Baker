@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:baselineAligned="false"
-    android:orientation="horizontal"
-    android:id="@+id/large_constraint">
+    <android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/cl_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+    android:padding="5dp">
 
+        <FrameLayout
+            android:id="@+id/fragment_frame"
+            android:layout_width="200dp"
+            android:layout_height="292dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
-    <fragment
-        android:id="@+id/main_food_list"
-        android:layout_width="@dimen/w600dp_main_activity_food_list_layout_width"
-        android:layout_height="@dimen/w600dp_main_activity_food_list_layout_height"
-        android:layout_marginBottom="@dimen/w600dp_main_activity_food_list_margin_bottom"
-        android:layout_marginEnd="@dimen/w600dp_main_activity_food_list_margin_end"
-        android:layout_marginLeft="@dimen/w600dp_main_activity_food_list_margin_left"
-        android:layout_marginRight="@dimen/w600dp_main_activity_food_list_margin_right"
-        android:layout_marginStart="@dimen/w600dp_main_activity_food_list_margin_start"
-        android:layout_marginTop="@dimen/w600dp_main_activity_food_list_margin_top"
-        app:layout_constraintBottom_toTopOf="@+id/ingredient_pane"
-        app:layout_constraintEnd_toStartOf="@+id/cooking_steps"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <fragment
-        android:id="@+id/ingredient_pane"
-        android:layout_width="@dimen/w600dp_main_activity_ingredient_pane_layout_width"
-        android:layout_height="@dimen/w600dp_main_activity_ingredient_pane_layout_height"
-        android:layout_marginBottom="@dimen/w600dp_main_activity_ingredient_pane_margin_bottom"
-        android:layout_marginEnd="@dimen/w600dp_main_activity_ingredient_pane_margin_end"
-        android:layout_marginLeft="@dimen/w600dp_main_activity_ingredient_pane_margin_left"
-        android:layout_marginRight="@dimen/w600dp_main_activity_ingredient_pane_margin_right"
-        android:layout_marginStart="@dimen/w600dp_main_activity_ingredient_pane_margin_start"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cooking_steps"
-        app:layout_constraintStart_toStartOf="parent"
-        />
-
-    <fragment
-        android:id="@+id/cooking_steps"
-        android:layout_width="@dimen/w600dp_main_activity_cooking_steps_layout_width"
-        android:layout_height="@dimen/w600dp_main_activity_cooking_steps_layout_height"
-        app:layout_constraintBottom_toBottomOf="@+id/cooking_video"
-        app:layout_constraintEnd_toStartOf="@+id/cooking_video"
-        app:layout_constraintTop_toTopOf="@+id/cooking_video"
-        app:layout_constraintVertical_bias="0.497" />
-
-    <fragment
-        android:id="@+id/cooking_video"
-        android:layout_width="@dimen/w600dp_main_activity_cooking_video_layout_width"
-        android:layout_height="@dimen/w600dp_main_activity_cooking_video_layout_height"
-        android:layout_marginEnd="@dimen/w600dp_main_activity_cooking_video_margin_end"
-        android:layout_marginRight="@dimen/w600dp_main_activity_cooking_video_margin_right"
+    <FrameLayout
+        android:id="@+id/fragment_ingredients"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_frame"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="91dp" />
+        app:layout_constraintHorizontal_bias="0.037"
+        app:layout_constraintStart_toEndOf="@+id/fragment_frame"
+        app:layout_constraintTop_toTopOf="@+id/fragment_frame"
+        app:layout_constraintVertical_bias="0.0" />
 
-</android.support.constraint.ConstraintLayout>
+        <FrameLayout
+            android:id="@+id/cooking_steps"
+            android:layout_width="wrap_content"
+            android:layout_height="330dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.843"
+            app:layout_constraintStart_toEndOf="@+id/fragment_ingredients"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/cooking_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/cooking_steps"
+            app:layout_constraintStart_toStartOf="@+id/cooking_steps"
+            app:layout_constraintTop_toBottomOf="@+id/cooking_steps"
+            app:layout_constraintVertical_bias="0.945" />
+
+    </android.support.constraint.ConstraintLayout>
+
