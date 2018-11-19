@@ -66,17 +66,22 @@ public class DetailFragment extends Fragment {
 
 
         FloatingActionButton fb_back_navigator = rootView.findViewById(R.id.fabDetailBack);
-        fb_back_navigator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                FragmentManager fragmentManager =  getFragmentManager();
-                if (fragmentManager.getBackStackEntryCount() > 0) {
-                    fragmentManager.popBackStack();
+        if (bundle.getBoolean("ScreenFlag")) {
+            fb_back_navigator.setVisibility(View.INVISIBLE);
+
+        }
+            fb_back_navigator.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    if (fragmentManager.getBackStackEntryCount() > 0) {
+                        fragmentManager.popBackStack();
+                    }
+
                 }
-
-            }
-        });
+            });
 
         return rootView;
 
