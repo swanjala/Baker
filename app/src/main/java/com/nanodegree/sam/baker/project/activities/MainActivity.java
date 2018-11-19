@@ -3,6 +3,7 @@ package com.nanodegree.sam.baker.project.activities;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.nanodegree.sam.baker.R;
 import com.nanodegree.sam.baker.project.fragments.DetailFragment;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
         setContentView(R.layout.activity_main);
 
 
-        if (findViewById(R.id.large_constraint) != null) {
+        if (findViewById(R.id.cl_fragment_container) != null) {
 
             largeScreen = true;
 
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
                 FoodFragment foodFragment = new FoodFragment();
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.main_food_list, foodFragment)
+                fragmentManager.beginTransaction().add(R.id.fragment_frame, foodFragment)
                         .commit();
 
             }
@@ -63,11 +64,24 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(INGREDIENTS, data);
+            bundle.putBoolean("ScreenFlag", largeScreen);
             ingredientFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.ingredient_pane,
+
+
+            fragmentManager.beginTransaction().replace(R.id.fragment_ingredients,
                     ingredientFragment)
                     .addToBackStack(null)
                     .commit();
+            //FragmentManager fragmentManager = getSupportFragmentManager();
+            DetailFragment detailFragment = new DetailFragment();
+
+           // Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(DETAILS, data.getCookingSteps());
+            detailFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.cooking_steps,
+                    detailFragment).addToBackStack(null).commit();
+
+            VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
 
         } else {
 
@@ -76,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
 
             Bundle bundle = new Bundle();
             bundle.putParcelable(INGREDIENTS, data);
+            bundle.putBoolean("ScreenFlag", largeScreen);
             ingredientFragment.setArguments(bundle);
             fragmentManager.beginTransaction().replace(R.id.food_names_container, ingredientFragment)
                     .addToBackStack(null)
@@ -113,14 +128,29 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
 
     @Override
     public void onPlayVideoSelected(String videoString) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
 
-        Bundle bundle = new Bundle();
-        bundle.putString(DETAILS, videoString);
-        videoPlayerFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.food_names_container,
-                videoPlayerFragment).addToBackStack(null).commit();
+        if(largeScreen){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString(DETAILS, videoString);
+            bundle.putBoolean("ScreenFlag",largeScreen);
+            videoPlayerFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.cooking_video,
+                    videoPlayerFragment).addToBackStack(null).commit();
+
+        } else {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
+
+            Bundle bundle = new Bundle();
+            bundle.putString(DETAILS, videoString);
+            videoPlayerFragment.setArguments(bundle);
+            fragmentManager.beginTransaction().replace(R.id.food_names_container,
+                    videoPlayerFragment).addToBackStack(null).commit();
+
+        }
     }
 
 }
