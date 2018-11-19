@@ -1,6 +1,7 @@
 package com.nanodegree.sam.baker.project.fragments;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -74,6 +75,7 @@ public class VideoPlayerFragment extends Fragment {
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl);
+            mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),R.drawable.ic_ondemand_video_24dp));
             mPlayerView.setPlayer(mExoPlayer);
             String userAgent = Util.getUserAgent(context, USER_AGENT);
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
