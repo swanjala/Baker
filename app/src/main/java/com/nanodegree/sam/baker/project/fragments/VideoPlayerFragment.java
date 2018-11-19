@@ -44,7 +44,12 @@ public class VideoPlayerFragment extends Fragment {
         String urlString = bundle.getString(DETAILS);
         initializePlayer(Uri.parse(urlString));
 
+
         FloatingActionButton fb_back_navigator = rootView.findViewById(R.id.fabButtonBack);
+        if (bundle.getBoolean("ScreenFlag")) {
+            fb_back_navigator.setVisibility(View.INVISIBLE);
+
+        }
         fb_back_navigator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
