@@ -61,6 +61,14 @@ public class IngredientFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         FloatingActionButton fb_view_steps = rootView.findViewById(R.id.fabDetails);
+
+
+        FloatingActionButton fb_back_navigator = rootView.findViewById(R.id.fabBack);
+        if (bundle.getBoolean("ScreenFlag")) {
+            fb_view_steps.setVisibility(View.INVISIBLE);
+            fb_back_navigator.setVisibility(View.INVISIBLE);
+
+        }
         fb_view_steps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +76,6 @@ public class IngredientFragment extends Fragment {
             }
         });
 
-        FloatingActionButton fb_back_navigator = rootView.findViewById(R.id.fabBack);
         fb_back_navigator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
