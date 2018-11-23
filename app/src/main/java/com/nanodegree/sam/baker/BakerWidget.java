@@ -31,6 +31,7 @@ public class BakerWidget extends AppWidgetProvider {
 
 
     private static final String INGREDIENTS = "ingredients";
+    private static final String INGREDIENT = "ingredient";
     private static final String QUALITY_KEY = "quantity";
     private static final String MEASUREMENT_KEY = "measure";
     private static final String NAME = "name";
@@ -75,7 +76,7 @@ public class BakerWidget extends AppWidgetProvider {
                         JSONObject jsonObject = new JSONObject(ingredientsDataList.get(i).toString());
                         value = value + jsonObject.getString(QUALITY_KEY).concat(",")
                                 .concat(jsonObject.getString(MEASUREMENT_KEY).concat(",")
-                                .concat(jsonObject.getString(INGREDIENTS)).concat("\n"));
+                                .concat(jsonObject.getString(INGREDIENT)).concat("\n"));
                     }
                     RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.baker_widget);
 
