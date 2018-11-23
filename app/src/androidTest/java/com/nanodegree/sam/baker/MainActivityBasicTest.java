@@ -64,7 +64,7 @@ public class MainActivityBasicTest {
     }
 
     @Test
-    public void test_that_clicking_recycler_view_opens_ingredient_fragment()
+    public void test_recycler_view_on_click()
              {
                  onView(withId(R.id.rv_food_names)).perform(click());
     }
