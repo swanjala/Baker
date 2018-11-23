@@ -84,7 +84,7 @@ public class VideoPlayerFragment extends Fragment {
     public void onResume(){
         super.onResume();
 
-        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FILL;
+        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT;
         initializePlayer(resizeMode,VideoUri);
 
     }
