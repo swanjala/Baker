@@ -24,6 +24,7 @@ public class IngredientFragment extends Fragment {
 
     private BakingNetworkData bakingData;
     private static final String INGREDIENTS = "Ingredients";
+    private static final String SCREEN_FLAG = "ScreenFlag";
     IngredientFragment.OnIngredientActionClicked mIngredientCallBack;
 
     public IngredientFragment() {
@@ -34,7 +35,6 @@ public class IngredientFragment extends Fragment {
         void onIngredientViewActionClicked(ArrayList<CookingSteps> stepsData);
 
     }
-
 
     @Override
     public void onAttach(Context context) {
@@ -64,7 +64,7 @@ public class IngredientFragment extends Fragment {
 
 
         FloatingActionButton fb_back_navigator = rootView.findViewById(R.id.fabBack);
-        if (bundle.getBoolean("ScreenFlag")) {
+        if (bundle.getBoolean(SCREEN_FLAG)) {
             fb_view_steps.setVisibility(View.INVISIBLE);
             fb_back_navigator.setVisibility(View.INVISIBLE);
 
@@ -90,4 +90,5 @@ public class IngredientFragment extends Fragment {
         return rootView;
 
     }
+
 }
