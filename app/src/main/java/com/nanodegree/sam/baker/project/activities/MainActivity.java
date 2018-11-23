@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
 
     private static final String DETAILS = "Details";
     private static final String INGREDIENTS = "Ingredients";
+    private static final String SCREEN_FLAG = "ScreenFlag";
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
 
     @Override
@@ -29,98 +31,123 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
         setContentView(R.layout.activity_main);
 
 
-        if (findViewById(R.id.large_constraint) != null) {
+        if (fragmentManager.getBackStackEntryCount() == 0
+                && savedInstanceState == null) {
 
-            largeScreen = true;
-
-            if (savedInstanceState == null) {
-                FoodFragment foodFragment = new FoodFragment();
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                fragmentManager.beginTransaction().add(R.id.main_food_list, foodFragment)
-                        .commit();
-
-            }
-        } else {
-            largeScreen = false;
             FoodFragment foodFragment = new FoodFragment();
+            if (findViewById(R.id.cl_fragment_container) != null) {
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
+                largeScreen = true;
 
-            fragmentManager.beginTransaction().add(R.id.food_names_container, foodFragment)
-                    .commit();
+                fragmentManager.beginTransaction()
+                        .add(R.id.fragment_frame, foodFragment)
+                        .commit();
+            } else {
+                largeScreen = false;
+                fragmentManager.beginTransaction()
+                        .add(R.id.food_names_container, foodFragment)
+                        .commit();
+            }
         }
 
     }
+
 
     @Override
     public void onFoodSelected(BakingNetworkData data) {
 
-        if (largeScreen) {
+        IngredientFragment ingredientFragment = new IngredientFragment();
+        DetailFragment detailFragment = new DetailFragment();
+        Bundle bundle = new Bundle();
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            IngredientFragment ingredientFragment = new IngredientFragment();
+        IngredientFragment savedFragment = (IngredientFragment)getSupportFragmentManager()
+                .findFragmentById(R.id.fragment_ingredients);
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(INGREDIENTS, data);
-            ingredientFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.ingredient_pane,
-                    ingredientFragment)
-                    .addToBackStack(null)
-                    .commit();
+        if (savedFragment == null ) {
 
-        } else {
+            if (largeScreen) {
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            IngredientFragment ingredientFragment = new IngredientFragment();
+                bundle.putParcelable(INGREDIENTS, data);
+                bundle.putBoolean(SCREEN_FLAG, largeScreen);
+                ingredientFragment.setArguments(bundle);
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelable(INGREDIENTS, data);
-            ingredientFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.food_names_container, ingredientFragment)
-                    .addToBackStack(null)
-                    .commit();
+
+                fragmentManager.beginTransaction().replace(R.id.fragment_ingredients,
+                        ingredientFragment)
+                        .addToBackStack(null)
+                        .commit();
+
+                bundle.putParcelableArrayList(DETAILS, data.getCookingSteps());
+                detailFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.cooking_steps,
+                        detailFragment).addToBackStack(null).commit();
+
+            } else {
+
+                bundle.putParcelable(INGREDIENTS, data);
+                bundle.putBoolean(SCREEN_FLAG, largeScreen);
+                ingredientFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.food_names_container, ingredientFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
         }
     }
-
 
     @Override
     public void onIngredientViewActionClicked(ArrayList<CookingSteps> cookingStepsData) {
 
+        Bundle bundle = new Bundle();
 
-        if (largeScreen) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            DetailFragment detailFragment = new DetailFragment();
+        DetailFragment detailFragment = new DetailFragment();
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(DETAILS, cookingStepsData);
-            detailFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.cooking_steps,
-                    detailFragment).addToBackStack(null).commit();
-        } else {
+        DetailFragment savedFragment = (DetailFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.cooking_steps);
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            DetailFragment detailFragment = new DetailFragment();
+        if (savedFragment == null ) {
 
-            Bundle bundle = new Bundle();
-            bundle.putParcelableArrayList(DETAILS, cookingStepsData);
-            detailFragment.setArguments(bundle);
-            fragmentManager.beginTransaction().replace(R.id.food_names_container,
-                    detailFragment).addToBackStack(null).commit();
+            if (largeScreen) {
+                bundle.putParcelableArrayList(DETAILS, cookingStepsData);
+                detailFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.cooking_steps,
+                        detailFragment).addToBackStack(null).commit();
+            } else {
+
+                bundle.putParcelableArrayList(DETAILS, cookingStepsData);
+                detailFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.food_names_container,
+                        detailFragment).addToBackStack(null).commit();
+            }
         }
 
     }
 
     @Override
     public void onPlayVideoSelected(String videoString) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
         VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putString(DETAILS, videoString);
-        videoPlayerFragment.setArguments(bundle);
-        fragmentManager.beginTransaction().replace(R.id.food_names_container,
-                videoPlayerFragment).addToBackStack(null).commit();
+
+        VideoPlayerFragment savedFragment = (VideoPlayerFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.cooking_video);
+
+        if (savedFragment == null) {
+
+            if (largeScreen) {
+                bundle.putString(DETAILS, videoString);
+                bundle.putBoolean(SCREEN_FLAG, largeScreen);
+                videoPlayerFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.cooking_video,
+                        videoPlayerFragment).addToBackStack(null).commit();
+
+            } else {
+                bundle.putString(DETAILS, videoString);
+                videoPlayerFragment.setArguments(bundle);
+                fragmentManager.beginTransaction().replace(R.id.food_names_container,
+                        videoPlayerFragment).addToBackStack(null).commit();
+
+            }
+        }
     }
 
 }

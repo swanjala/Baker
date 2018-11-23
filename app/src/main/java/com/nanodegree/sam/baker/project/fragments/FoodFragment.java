@@ -52,30 +52,31 @@ public class FoodFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        final View rootView = inflater.inflate(R.layout.fragment_food_names, container, false);
-        final RecyclerView recyclerView = rootView.findViewById(R.id.rv_food_names);
-        FoodNetworkService foodNetworkService = ApiFactory.create(getContext());
+            final View rootView = inflater.inflate(R.layout.fragment_food_names, container, false);
+            final RecyclerView recyclerView = rootView.findViewById(R.id.rv_food_names);
+            FoodNetworkService foodNetworkService = ApiFactory.create(getContext());
 
+        if (savedInstanceState == null) {
+            Call<ArrayList<BakingNetworkData>> call = foodNetworkService.fetchData();
+            call.enqueue(new Callback<ArrayList<BakingNetworkData>>() {
 
-        Call<ArrayList<BakingNetworkData>> call = foodNetworkService.fetchData();
-        call.enqueue(new Callback<ArrayList<BakingNetworkData>>() {
+                @Override
+                public void onResponse(Call<ArrayList<BakingNetworkData>> call,
+                                       Response<ArrayList<BakingNetworkData>> response) {
 
-            @Override
-            public void onResponse(Call<ArrayList<BakingNetworkData>> call,
-                                   Response<ArrayList<BakingNetworkData>> response) {
+                    ListAdapter mListAdapter = new ListAdapter(response.body());
 
-                ListAdapter mListAdapter = new ListAdapter(response.body());
+                    recyclerView.setAdapter(mListAdapter);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                }
 
-                recyclerView.setAdapter(mListAdapter);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            }
+                @Override
+                public void onFailure(Call<ArrayList<BakingNetworkData>> call, Throwable t) {
+                    Log.e(LOG_TAG, t.getLocalizedMessage());
 
-            @Override
-            public void onFailure(Call<ArrayList<BakingNetworkData>> call, Throwable t) {
-                Log.e(LOG_TAG, t.getLocalizedMessage());
-
-            }
-        });
+                }
+            });
+        }
 
         return rootView;
     }

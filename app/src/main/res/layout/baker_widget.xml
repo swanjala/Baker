@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/widget_margin"
+    android:isScrollContainer="true"
+    android:id="@+id/widgetLayout">
+
+    <TextView
+        android:id="@+id/appwidget_text"
+        android:layout_width="@dimen/baker_widget_layout_width"
+        android:layout_height="@dimen/baker_widget_layout_height"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="@dimen/baker_widget_layout_margin_start"
+        android:background="@color/colorAccent"
+        android:contentDescription="@string/appwidget_text"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/baker_widget_text_size"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/appwidget_data"
+        android:layout_width="@dimen/baker_widget_app_widget_width"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/appwidget_text"
+        android:layout_marginTop="@dimen/baker_widget_app_widget_margin_top"
+        android:background="@color/colorPrimary"
+        android:contentDescription="@string/appwidget_text"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="@dimen/baker_widget_app_widget_data_text_size"
+        android:textStyle="bold|italic" />
+
+
+
+</RelativeLayout>
