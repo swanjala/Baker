@@ -20,21 +20,23 @@
         android:foreground="@drawable/ic_navigate_before_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.025"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.981" />
+        app:layout_constraintVertical_bias="0.017" />
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/cookPlayer"
-        android:layout_width="@dimen/fragment_video_player_simple_exo_layout_width"
-        android:layout_height="@dimen/fragment_video_player_simple_exo_layout_height"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/fragment_video_player_simple_exo_layout_bottom"
         android:layout_marginEnd="@dimen/fragment_video_player_simple_exo_layout_margin_end"
         android:layout_marginLeft="@dimen/fragment_video_player_simple_exo_layou_margin_left"
         android:layout_marginRight="@dimen/fragment_video_player_simple_exo_layout_margin_right"
         android:layout_marginStart="@dimen/fragment_video_player_simple_exo_layout_margin_start"
         android:layout_marginTop="@dimen/fragment_video_player_simple_exo_layout_margin_top"
+        app:fastforward_increment="1000"
+        app:rewind_increment="1000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
