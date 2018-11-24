@@ -22,9 +22,6 @@ import java.util.ArrayList;
 
 public class DetailFragment extends Fragment {
 
-    private SimpleExoPlayer mExoPlayer;
-    private SimpleExoPlayerView mPlayerView;
-
     private static final String DETAILS = "Details";
 
     private ArrayList<CookingSteps> stepsData;

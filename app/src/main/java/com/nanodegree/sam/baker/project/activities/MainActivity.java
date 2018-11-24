@@ -15,7 +15,8 @@ import com.nanodegree.sam.baker.project.models.CookingSteps;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements FoodFragment.OnFoodItemClickListener,
-        IngredientFragment.OnIngredientActionClicked, DetailFragment.OnVideoButtonClickListener {
+        IngredientFragment.OnIngredientActionClicked,
+        DetailFragment.OnVideoButtonClickListener {
 
     private boolean largeScreen;
 
@@ -87,7 +88,8 @@ public class MainActivity extends AppCompatActivity implements FoodFragment.OnFo
                 bundle.putParcelable(INGREDIENTS, data);
                 bundle.putBoolean(SCREEN_FLAG, largeScreen);
                 ingredientFragment.setArguments(bundle);
-                fragmentManager.beginTransaction().replace(R.id.food_names_container, ingredientFragment)
+                fragmentManager.beginTransaction()
+                        .replace(R.id.food_names_container, ingredientFragment)
                         .addToBackStack(null)
                         .commit();
             }

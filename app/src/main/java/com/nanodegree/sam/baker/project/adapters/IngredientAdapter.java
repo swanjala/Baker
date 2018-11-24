@@ -18,8 +18,6 @@ public class IngredientAdapter extends RecyclerView.
     private ArrayList<Ingredients> mIngredientData;
 
     private Context context;
-    private static final String INGREDIENT_DATA = "ingredient_data";
-    private static final String LOG_TAG= "data_error";
 
     public IngredientAdapter(Context context, ArrayList<Ingredients> ingredientData){
         this.context = context;
