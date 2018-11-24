@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,13 +32,16 @@ import com.nanodegree.sam.baker.R;
 import java.net.URI;
 
 public class VideoPlayerFragment extends Fragment {
-    private SimpleExoPlayer mExoPlayer;
-    private SimpleExoPlayerView mPlayerView;
     private static final String DETAILS = "Details";
     private static final String USER_AGENT = "Cooking Instructions";
     private static final String SCREEN_FLAG = "ScreenFlag";
+    private static final String URL = "UrlString";
+    private static final String PLAYER_POSITION = "PlayerPosition";
+    private SimpleExoPlayer mExoPlayer;
+    private SimpleExoPlayerView mPlayerView;
     private Uri VideoUri;
     private int resizeMode;
+    private Bundle bundle;
 
     public VideoPlayerFragment() {
 
@@ -48,16 +52,21 @@ public class VideoPlayerFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_video_player, container, false);
         mPlayerView = (SimpleExoPlayerView) rootView.findViewById(R.id.cookPlayer);
 
-        Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
 
         String urlString = bundle.getString(DETAILS);
 
         this.VideoUri = Uri.parse(urlString);
-        bundle.putString("UrlString",urlString);
-
+        bundle.putString(URL, urlString);
         resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT;
-        initializePlayer(resizeMode,VideoUri);
 
+        if (savedInstanceState != null) {
+            initializePlayer(resizeMode, VideoUri,
+                    savedInstanceState.getLong(PLAYER_POSITION));
+        } else {
+
+            initializePlayer(resizeMode, VideoUri);
+        }
 
         FloatingActionButton fb_back_navigator = rootView.findViewById(R.id.fabButtonBack);
         if (bundle.getBoolean(SCREEN_FLAG)) {
@@ -76,33 +85,40 @@ public class VideoPlayerFragment extends Fragment {
             }
         });
 
-
         return rootView;
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
+    public void onSaveInstanceState(Bundle onSavedInstanceState) {
+        super.onSaveInstanceState(onSavedInstanceState);
 
+        onSavedInstanceState.putLong(PLAYER_POSITION, mExoPlayer.getCurrentPosition());
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
         resizeMode = AspectRatioFrameLayout.RESIZE_MODE_FIT;
-        initializePlayer(resizeMode,VideoUri);
+        initializePlayer(resizeMode, VideoUri);
 
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
 
-        if(Util.SDK_INT <= 23) {
+        if (Util.SDK_INT <= 23) {
             releasePlayer();
         }
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
 
-        if(Util.SDK_INT <= 23) {
+        if (Util.SDK_INT <= 23) {
             releasePlayer();
         }
     }
@@ -114,14 +130,47 @@ public class VideoPlayerFragment extends Fragment {
 
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
+
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector, loadControl);
-            mPlayerView.setDefaultArtwork(BitmapFactory.decodeResource(getResources(),R.drawable.ic_ondemand_video_24dp));
+            mPlayerView.setDefaultArtwork(BitmapFactory
+                    .decodeResource(getResources(), R.drawable.ic_ondemand_video_24dp));
             mPlayerView.setPlayer(mExoPlayer);
             mPlayerView.setResizeMode(resizeModeFactor);
+
             String userAgent = Util.getUserAgent(context, USER_AGENT);
-            MediaSource mediaSource = new ExtractorMediaSource(VideoUri, new DefaultDataSourceFactory(
-                    context, userAgent), new DefaultExtractorsFactory(), null, null);
+            MediaSource mediaSource = new ExtractorMediaSource(VideoUri,
+                    new DefaultDataSourceFactory(
+                    context, userAgent), new DefaultExtractorsFactory(),
+                    null, null);
+
             mExoPlayer.prepare(mediaSource);
+            mExoPlayer.setPlayWhenReady(true);
+        }
+    }
+
+    private void initializePlayer(int resizeModeFactor, Uri VideoUri, Long tracker) {
+
+        Context context = getActivity();
+        if (mExoPlayer == null) {
+
+            TrackSelector trackSelector = new DefaultTrackSelector();
+            LoadControl loadControl = new DefaultLoadControl();
+
+            mExoPlayer = ExoPlayerFactory.newSimpleInstance(context,
+                    trackSelector, loadControl);
+            mPlayerView.setDefaultArtwork(BitmapFactory
+                    .decodeResource(getResources(), R.drawable.ic_ondemand_video_24dp));
+            mPlayerView.setPlayer(mExoPlayer);
+            mPlayerView.setResizeMode(resizeModeFactor);
+
+            String userAgent = Util.getUserAgent(context, USER_AGENT);
+            MediaSource mediaSource = new ExtractorMediaSource(VideoUri,
+                    new DefaultDataSourceFactory(
+                    context, userAgent), new DefaultExtractorsFactory(),
+                    null, null);
+
+            mExoPlayer.prepare(mediaSource);
+            mExoPlayer.seekTo(tracker);
             mExoPlayer.setPlayWhenReady(true);
         }
     }
